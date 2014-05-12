@@ -39,7 +39,7 @@ for (i in 1:dim(dataset)[1])
     dataset$ActivityName[i] <- as.character(activities[dataset$ActivityLabel[i],2]);
 }
 
-# calculate averages of the measurements for each test subject and each activity
+# calculate averages of the measurements for each activity for each test subject
 
 tidymeans <- data.frame(matrix(nrow=36, ncol=81));
 colnames(tidymeans)[1] <- "Subject";
