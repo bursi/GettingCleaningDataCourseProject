@@ -41,18 +41,19 @@ for (i in 1:dim(dataset)[1])
 
 # calculate averages of the measurements for each test subject and each activity
 
-tidymeans <- data.frame(matrix(nrow=36, ncol=80));
-colnames(tidymeans)[1] <- "Cluster";
-colnames(tidymeans)[2:80] <- colnames(dataset)[1:79];
-for (j in 1:6)
+tidymeans <- data.frame(matrix(nrow=36, ncol=81));
+colnames(tidymeans)[1] <- "Subject";
+colnames(tidymeans)[2] <- "Activity";
+colnames(tidymeans)[3:81] <- colnames(dataset)[1:79];
+for (j in 1:30)
 {
-    tidymeans[j,1] <- as.character(activities[j,2]);
-    tidymeans[j,2:80] <- colMeans(dataset[dataset$ActivityLabel==j,1:79]);
-}
-for (j in 7:36)
-{
-    tidymeans[j,1] <- paste("subject", as.character(j-6), sep="");
-    tidymeans[j,2:80] <- colMeans(dataset[dataset$Subject==(j-6),1:79]);
+    k <- 1;
+    for (k in 1:6)
+    {
+        tidymeans[6*(j-1)+k,1] <- j;
+        tidymeans[6*(j-1)+k,2] <- as.character(activities[k,2]);
+        tidymeans[6*(j-1)+k,3:81] <- colMeans(dataset[dataset$Subject==j & dataset$ActivityLabel==k,1:79]);
+    }
 }
 
 # write the resulting data set to a .txt file
